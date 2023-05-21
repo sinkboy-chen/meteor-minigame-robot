@@ -1,0 +1,33 @@
+name: Run Python Script
+
+on: 
+  workflow_dispatch:
+
+env:
+  account_1: ${{ secrets.ACCOUNT_1 }}
+  account_2: ${{ secrets.ACCOUNT_2}}
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Taipei"
+          
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v4
+        with:
+          path: "path/to/requirements.txt"
+      
+      - name: Run Python Script
+        run: python mypythonscript.py
