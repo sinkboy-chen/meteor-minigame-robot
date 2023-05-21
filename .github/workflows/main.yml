@@ -27,6 +27,6 @@ jobs:
           
       - name: execute py script # run main.py
         env:
-          account_1: ${{ ACCOUNT_1 }}
-          account_2: ${{ ACCOUNT_2 }}
+          account_1: ${{ secrets.ACCOUNT_1 }}
+          account_2: ${{ secrets.ACCOUNT_2 }}
         run: python main_v1.py
