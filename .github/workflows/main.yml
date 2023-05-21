@@ -1,8 +1,11 @@
 name: run main.py
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 4 * * *'
+  
+
 
 jobs:
   build:
