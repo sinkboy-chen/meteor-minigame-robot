@@ -1,33 +1,29 @@
-name: Run Python Script
+name: run main.py
 
-on: 
-  workflow_dispatch:
-
-env:
-  account_1: ${{ secrets.ACCOUNT_1 }}
-  account_2: ${{ secrets.ACCOUNT_2}}
+on:
+  schedule:
+    - cron: '0 2 * * *'
 
 jobs:
-  run-python:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set Timezone
-        uses: szenius/set-timezone@v1.2
-        with:
-          timezoneLinux: "Asia/Taipei"
-          
-      - name: Checkout Code
-        uses: actions/checkout@v3
-      
-      - name: Setup Python
+    
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner
+
+      - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.9' # install the python version needed
           
-      - name: Install Python dependencies
-        uses: py-actions/py-dependency-install@v4
-        with:
-          path: "path/to/requirements.txt"
-      
-      - name: Run Python Script
-        run: python mypythonscript.py
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: execute py script # run main.py
+        env:
+          account_1: ${{ ACCOUNT_1 }}
+          account_2: ${{ ACCOUNT_2 }}
+        run: python main_v1.py
