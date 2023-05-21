@@ -43,26 +43,29 @@ def get_mini_game_id(account):
 def play_mini_game(account, mini_game_id):
     url = "https://meteor.today/minigame/play_miniGame"
     data = '{"miniGameId":"' + mini_game_id + '","userId":"' + account["user_id"] + '"}'
-    resp = requests.post(url, data=data)
-    print(resp.text)
+    for i in range(10):
+        resp = requests.post(url, data=data)
+        print(f"attempt {i+1}: {resp.status_code} {resp.text}")
+        if resp.status_code != 400:
+            return
+        time.sleep(min(i*5+1, 30))
 
-
+print("getting cookie")
 account_1["cookie"] = get_cookie()
-print("got cookie")
+print("logging in account")
 login(account_1)
-print("account has logged in")
+print("getting minigame id")
 mini_game_id = get_mini_game_id(account_1)
-print("got mini game id")
 
 time.sleep(1)
+print("playing minigame for account 1 1st time")
 play_mini_game(account_1, mini_game_id)
-print("played account 1 1st time")
 time.sleep(1)
+print("playing minigame for account 1 2nd time")
 play_mini_game(account_1, mini_game_id)
-print("played account 1 2nd time")
 
+print("playing minigame for account 2 1st time")
 play_mini_game(account_2, mini_game_id)
-print("played account 2 1st time")
 time.sleep(1)
+print("playing minigame for account 2 2nd time")
 play_mini_game(account_2, mini_game_id)
-print("played account 2 2nd time")
