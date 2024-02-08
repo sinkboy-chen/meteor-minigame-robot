@@ -40,7 +40,7 @@ def play_mini_game(account, mini_game_id):
         time.sleep(min(i*5+1, 30))
 
 
-login(account_1)
+account_1["cookie"] = login(account_1)
 mini_game_id = get_mini_game_id(account_1)
 
 time.sleep(1)
